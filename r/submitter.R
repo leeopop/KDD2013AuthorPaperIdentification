@@ -3,7 +3,7 @@ load("test_data.RData")
 load("test_index.RData")
 load("gbm_fit.RData")
 
-n_trees <- 750
+n_trees <- 1500
 pred_score <- plogis(predict(
     gbm_fit,
     test_data,

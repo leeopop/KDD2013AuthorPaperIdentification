@@ -19,10 +19,10 @@ base_model <- subset(base_model, select = -c(is_valid, uid, AuthorId, PaperId))
 
 is_last <- duplicated(index_data[, c("AuthorId", "PaperId")], fromLast = TRUE)
 
-set.seed(12345)
+set.seed(31415)
 
 ### gbm adaboost
-n_trees <- 750
+n_trees <- 1500
 require(gbm)
 system.time({
     gbm_fit <- gbm(
@@ -30,10 +30,10 @@ system.time({
         data = base_model[!is_last, ],
         distribution = "adaboost",
         n.trees = n_trees,
-        interaction.depth = 4,
+        interaction.depth = 5,
         shrinkage = .1,
         keep.data = FALSE,
-        verbose = TRUE)})
+        verbose = TRUE, n.cores=24)})
 
 setwd(Dir$rdata)
 save(gbm_fit, file = "gbm_fit.RData")
